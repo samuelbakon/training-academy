@@ -1,14 +1,18 @@
 <template>
-    <div class="product-list">
-        <ProductCard v-for="product in products" :key="product.title" :product="product" />
-    </div>
+  <div>
+    <ProductDetail :product="product" />
+  </div>
 </template>
 
-<script setup lang="ts">
-    import { Product } from '~/core/dataTypes/Product';
+<script setup>
+import { ref } from 'vue'
+import ProductDetail from '~/components/ProductDetail.vue'
+import { Product } from '~/core/dataTypes/Product'
 
+const route = useRoute()
+const product = ref(new Product(0, '', '', '', 0))
 
-    const products = [
+const products = [
         new Product(
             1,
             'https://picsum.photos/seed/product1/300/200.jpg',
@@ -31,13 +35,8 @@
             39.99
         )
     ]
-</script>
 
-<style>
-    .product-list {
-        display: flex;
-        justify-content: space-around;
-        gap: 1rem;
-        padding: 2rem 0;
-    }
-</style>
+onMounted(() => {
+    product.value = products.find(p => p.id === parseInt(route.params.productId))
+})
+</script>

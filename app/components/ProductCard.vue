@@ -4,6 +4,7 @@
         <h3>{{ product.title }}</h3>
         <p>{{ product.description }}</p>
         <div class="price">{{ product.price }} FCFA</div>
+        <NuxtLink :to="`/products/${product.id}`">Voir plus</NuxtLink>
     </div>
 </template>
 

@@ -25,6 +25,10 @@ const links = ref([
         label: "Services"
     },
     {
+        to: "/products",
+        label: "Nos produits"
+    },
+    {
         to: "/contact",
         label: "Contacts"
     },

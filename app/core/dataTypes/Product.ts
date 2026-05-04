@@ -1,4 +1,5 @@
 export interface ProductInterface {
+    id: number
     image: string
     title: string
     description: string
@@ -6,12 +7,14 @@ export interface ProductInterface {
 }
 
 export class Product implements ProductInterface {
+    id: number
     image: string
     title: string
     description: string
     price: number
     
-    constructor(image: string, title: string, description: string, price: number) {
+    constructor(id: number, image: string, title: string, description: string, price: number) {
+        this.id = id
         this.image = image
         this.title = title
         this.description = description
