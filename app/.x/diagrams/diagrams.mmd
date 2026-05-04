@@ -1,0 +1,140 @@
+flowchart LR
+    %% Définition des acteurs (à l'extérieur du subgraph)
+    Client["<<actor>>\nClient"]
+    Restaurant["<<actor>>\nPartner Restaurant"]
+    Driver["<<actor>>\nDelivery person"]
+    Admin["<<actor>>\nAdministrator"]
+    Payment["<<actor>>\nExternal payment service"]
+
+    subgraph System ["Web/mobile platform for ordering and delivering meals"]
+        direction TB
+        UC1((Create an account))
+        UC2((Place an order))
+        UC3((Track delivery))
+        UC4((Confirm payment))
+        UC5((Manage meal catalog))
+        UC6((Loyalty program))
+        UC7((Scheduled delivery))
+    end
+
+    %% Relations Acteurs -> Use Cases
+    Client --- UC1
+    Client --- UC2
+    Client --- UC3
+    Client --- UC4
+
+    Restaurant --- UC2
+    Restaurant --- UC5
+
+    Driver --- UC3
+
+    Admin --- UC5
+
+    Payment --- UC4
+
+    %% Relations entre Use Cases (Correction des syntaxes de flèches)
+    UC2 -. "<<include>>" .-> UC4
+    UC7 -. "<<extend>>" .-> UC2
+    UC6 -. "<<extend>>" .-> UC1
+
+    %% Styles
+    classDef actor fill:#ffffff,stroke:#333333,stroke-width:1.5px,color:#111111;
+    classDef usecase fill:#fdfdfd,stroke:#444444,stroke-width:1px,color:#111111;
+    classDef future fill:#fff4cc,stroke:#aa8800,stroke-width:1px,color:#111111,stroke-dasharray: 5 3;
+
+    class Client,Restaurant,Driver,Admin,Payment actor;
+    class UC1,UC2,UC3,UC4,UC5 usecase;
+    class UC6,UC7 future;
+
+classDiagram
+    class Student {
+        +Integer id
+        +String name
+        +String email
+    }
+
+    class Course {
+        +Integer id
+        +String titre
+        +Decimal prix
+    }
+
+    class Chapter {
+        +Integer id
+        +String titre
+        +Integer duree
+    }
+
+    class Inscription {
+        +Date dateInscription
+        +String status
+    }
+
+    class Payment {
+        +Decimal amount
+        +Date date
+        +String mode
+    }
+
+    Student "1" --> "0..*" Inscription : has
+    Course "1" *-- "1..*" Chapter : contains
+    Inscription "0..*" --> "1" Student : concerns
+    Inscription "0..*" --> "1" Course : for
+    Inscription "1" --> "0..1" Payment : generates
+    
+
+sequenceDiagram
+    actor User
+    participant Browser as Web Browser/UI
+    participant Auth as Authentication Service
+    participant DB as User Database
+    participant Hash as Password Hashing/Verification
+    participant Session as Session/Token Manager
+
+    User->>Browser: Enter email and password
+    Browser->>Auth: Submit login request(email, password)
+    activate Auth
+    Auth->>DB: Find user by email
+    DB-->>Auth: Return user record + password hash
+    Auth->>Hash: Verify password(password, stored hash)
+    Hash-->>Auth: Valid / Invalid
+
+    alt Credentials valid
+        Auth->>Session: Create session/token for user
+        Session-->>Auth: Return session/token
+        Auth-->>Browser: Login success + session/token
+        Browser-->>User: Show dashboard / logged-in state
+    else Invalid email or password
+        Auth-->>Browser: Authentication failure
+        Browser-->>User: Show error message
+    end
+
+    deactivate Auth
+
+stateDiagram
+    [*] --> ShoppingCart
+    ShoppingCart --> Paid: Payment confirmed
+    ShoppingCart --> Abandoned: Cart abandoned
+    Paid --> Prepared: Preparation complete
+    Prepared --> Shipped: Carrier picks up package
+    Shipped --> Delivered: Customer confirms receipt
+    Delivered --> Returned: Return requested
+    Abandoned --> [*]
+    Returned --> [*]
+    
+flowchart LR
+    A[Shopping cart] --> B[Confirm order]
+    B --> C{Payment confirmed?}
+    C --> |Yes| D[Order paid]
+    C --> |No| E[Order abandoned]
+    D --> F[Prepare order]
+    F --> G[Preparation complete]
+    G --> H[Carrier picks up package]
+    H --> I[Order shipped]
+    I --> J[Customer confirms receipt]
+    J --> K[Order delivered]
+    K --> L{Return requested?}
+    L --> |Yes| M[Order returned]
+    L --> |No| N[End]
+    E --> N
+    M --> N

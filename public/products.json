@@ -1,0 +1,20 @@
+[
+    {
+        "image": "https://picsum.photos/seed/product1/300/200.jpg",
+        "title": "Product Title 1",
+        "description": "This is a brief description of the first product, highlighting its key features.",
+        "price": 19.99
+    },
+    {
+        "image": "https://picsum.photos/seed/product2/300/200.jpg",
+        "title": "Product Title 2",
+        "description": "This is a brief description of the second product, explaining what makes it special.",
+        "price": 29.99
+    },
+    {
+        "image": "https://picsum.photos/seed/product3/300/200.jpg",
+        "title": "Product Title 3",
+        "description": "This is a brief description of the third product, focusing on its benefits to the user.",
+        "price": 39.99
+    }
+]
