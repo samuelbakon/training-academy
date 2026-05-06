@@ -138,3 +138,41 @@ flowchart LR
     L --> |No| N[End]
     E --> N
     M --> N
+
+sequenceDiagram
+    actor Caller
+    participant OrderManager
+    participant MySQL as MySQL Database
+    participant PaymentProvider as Payment Provider
+    participant EmailService as Email Service
+    participant SMSService as SMS Service
+    participant FileSystem as File System
+
+    Caller->>OrderManager: processOrder(orderId, user, paymentType)
+    activate OrderManager
+
+    OrderManager->>MySQL: Check catches inventory
+    MySQL-->>OrderManager: Stock status
+
+    OrderManager->>OrderManager: Calculate price (VIP check)
+    Note right of OrderManager: if user.isVIP: price *= 0.9
+
+    alt paymentType === "STRIPE"
+        OrderManager->>PaymentProvider: Call Stripe SDK
+        PaymentProvider-->>OrderManager: Payment result
+    else paymentType === "MOBILE_MONEY"
+        OrderManager->>PaymentProvider: Call MTN/Orange API
+        PaymentProvider-->>OrderManager: Payment result
+    end
+
+    OrderManager->>EmailService: Send Email to buyer
+    EmailService-->>OrderManager: Email sent
+
+    OrderManager->>SMSService: Send SMS to fisherman
+    SMSService-->>OrderManager: SMS sent
+
+    OrderManager->>FileSystem: Write logs to order_log.txt
+    FileSystem-->>OrderManager: Logs written
+
+    OrderManager-->>Caller: Order processed
+    deactivate OrderManager

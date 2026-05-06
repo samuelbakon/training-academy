@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { Product } from '~/core/dataTypes/Product';
+    import { Product } from '~/core/dataTypes/Product';
     defineProps({
         product: {
             type: Product,

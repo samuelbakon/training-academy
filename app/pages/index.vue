@@ -3,7 +3,7 @@
         <HeroBanner />
         <ProductCardList />
 
-        <TaskList />
+        <TaskListRow />
     </div>
 </template>
 
