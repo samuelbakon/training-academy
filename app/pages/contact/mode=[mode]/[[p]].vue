@@ -17,5 +17,11 @@
 </template>
 
 <script setup>
-// Add any necessary script logic here
+definePageMeta({
+  key: route => route.fullPath,
+  keepalive: {
+    exclude: ['modal'],
+  },
+  pageType: 'Checkout',
+})
 </script>

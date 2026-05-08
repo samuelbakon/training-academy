@@ -33,4 +33,19 @@ const links = ref([
         label: "Contacts"
     },
 ])
+
+useHead({
+        link: [
+            {
+                rel: 'stylesheet',
+                href: '/assets/css/main.css'
+            }
+        ],
+        script: [
+            {
+                src: '/assets/js/bootstrap.js',
+                defer: true
+            }
+        ]
+    })
 </script>

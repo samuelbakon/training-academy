@@ -1,5 +1,8 @@
 <template>
   <div class="product-detail">
+
+    <h1>You are on product {{ productId }}</h1>
+
     <img :src="product.image" :alt="product.title">
     <h2>{{ product.title }}</h2>
     <p>{{ product.description }}</p>
@@ -10,12 +13,18 @@
 <script setup lang="ts">
 import { Product } from '~/core/dataTypes/Product';
 
-defineProps({
-  product: {
-    type: Product,
-    required: true
-  }
-});
+  const { productId } = useProduct
+  const { setupProductMeta } = useProductMeta()
+  
+  defineProps({
+    product: {
+      type: Product,
+      required: true
+    }
+  });
+
+  setupProductMeta()
+  
 </script>
 
 <style scoped>

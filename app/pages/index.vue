@@ -15,6 +15,10 @@
     definePageMeta({
         layout: 'default'
     });
+
+    defineProps({
+        couleur: 'red'
+    })
 </script>
 
 <style scoped>

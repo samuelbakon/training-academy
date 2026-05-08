@@ -7,13 +7,13 @@
             <p>Please choose the kind of contact:</p>
             <ul>
                 <li>
-                    <NuxtLink to="/contact/partnership">Partnership</NuxtLink>
+                    <NuxtLink to="/contact/mode=partnership">Partnership</NuxtLink>
                 </li>
                 <li>
-                    <NuxtLink to="/contact/work">Work</NuxtLink>
+                    <NuxtLink to="/contact/mode=work">Work</NuxtLink>
                 </li>
                 <li>
-                    <NuxtLink to="/contact/more-info">More informations</NuxtLink>
+                    <NuxtLink to="/contact/mode=more-info">More informations</NuxtLink>
                 </li>
             </ul>
         </div>
