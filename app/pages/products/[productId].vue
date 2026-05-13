@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h1>Total des produits {{ total }}</h1>
         <input type="text" v-model="productId">
         <ProductDetail :product="product" />
     </div>
@@ -10,18 +9,10 @@
     import ProductDetail from '~/components/ProductDetail.vue'
     import { useProductMeta } from '#imports'
     import useProductState from '~/states/useProductState'
-    import type { Product } from '~/core/dataTypes/Product'
 
     const route = useRoute()
     const { product, productId, getProduct } = useProductState
     const { setupProductMeta } = useProductMeta()
-
-    const products = useState('products');
-
-    const total = computed(() => {
-        if (!products.value) return 0;
-        return (products.value as Product[]).length || 0;
-    });
 
     onMounted(async () => {
         productId.value = parseInt(route.params.productId as string)
