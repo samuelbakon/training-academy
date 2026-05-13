@@ -1,6 +1,6 @@
-import useProduct from "./useProduct"
+import useProductState from "../states/useProductState"
 
-const { product, products, productId } = useProduct
+const { product, productId } = useProductState
 
 const useProductMeta = () => {
     const meta = computed(() => ({
@@ -30,6 +30,5 @@ const useProductMeta = () => {
         setupProductMeta
     }
 }
-
 
 export default useProductMeta

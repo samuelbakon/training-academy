@@ -5,16 +5,16 @@
 
     <img :src="product.image" :alt="product.title">
     <h2>{{ product.title }}</h2>
-    <p>{{ product.description }}</p>
+    <span>{{ product.description }}</span>
     <div class="price">{{ product.price }} FCFA</div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Product } from '~/core/dataTypes/Product';
+import useProductState from '~/states/useProductState';
 
-  const { productId } = useProduct
-  const { setupProductMeta } = useProductMeta()
+  const { productId } = useProductState
   
   defineProps({
     product: {
@@ -23,7 +23,9 @@ import { Product } from '~/core/dataTypes/Product';
     }
   });
 
-  setupProductMeta()
+  onMounted(() => {
+    console.log('ProductDetail mounted', productId.value);
+  });
   
 </script>
 
