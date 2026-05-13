@@ -25,7 +25,6 @@
             // navigateTo('/e/404')
         }
 
-        
         // await useFetch(`http://localhost:3001/products-api/all.json`, {
         //     onResponse: ({ response }: any) => {
         //         product.value = new Product(response.data.value)
