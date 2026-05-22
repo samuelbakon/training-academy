@@ -10,6 +10,10 @@
     import { useProductMeta } from '#imports'
     import useProductState from '~/states/useProductState'
 
+    definePageMeta({
+        layout: 'default'
+    })
+
     const route = useRoute()
     const { product, productId, getProduct } = useProductState
     const { setupProductMeta } = useProductMeta()
