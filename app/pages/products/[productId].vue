@@ -1,6 +1,5 @@
 <template>
     <div>
-        <input type="text" v-model="productId">
         <ProductDetail :product="product" />
     </div>
 </template>

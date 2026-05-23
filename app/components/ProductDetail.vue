@@ -7,6 +7,7 @@
       <h2>{{ product.title }}</h2>
       <span>{{ product.description }}</span>
       <div class="price">{{ product.price }} FCFA</div>
+      <AddToCart :product="product" />
     </div>
     <div v-else class="not-found">
       <h1>Produit introuvable</h1>
