@@ -10,7 +10,13 @@
             <NuxtLink to="/" class="btn-continue">Continue Shopping</NuxtLink>
         </div>
 
-        <div v-else class="cart-page-content">
+        <ErrorDisplay v-if="errors.length > 0" :errors="errors" />
+        <div v-else-if="errors.length === 0 && items.length > 0" class="no-errors">
+            <p>✓ No validation errors found</p>
+        </div>
+
+
+        <div class="cart-page-content">
             <div class="cart-items-list">
                 <CartItem v-for="item in items" :key="item.product.id" :item="item" />
             </div>
@@ -30,7 +36,7 @@
                         <span>Total</span>
                         <span class="total-amount">{{ total.toFixed(2) }} €</span>
                     </div>
-                    <NuxtLink to="/cart" class="btn-checkout">Proceed to Checkout</NuxtLink>
+                    <button @click="submitOrder()" class="btn-checkout">Proceed to Checkout</button>
                 </div>
             </div>
         </div>
@@ -41,7 +47,7 @@
     import { computed } from 'vue'
     import useCart from "~/composables/useCart"
 
-    const { items, empty, total } = useCart
+    const { items, errors, empty, total, validateCart } = useCart
 
     const totalItems = computed(() => {
         return items.value.reduce((sum, item) => sum + item.quantity, 0)
@@ -49,6 +55,17 @@
 
     const emptyCart = () => {
         empty()
+    }
+
+    onMounted(() => {
+        validateCart()
+    })
+
+    const submitOrder = () => {
+        if (validateCart()) {
+            // TODO: Implement order submission
+            alert('Order submitted')
+        }
     }
 </script>
 
@@ -189,6 +206,21 @@
 
     .btn-checkout:hover {
         background-color: #0056b3;
+    }
+
+    .no-errors {
+        background-color: #e8f5e8;
+        border: 1px solid #4caf50;
+        border-radius: 6px;
+        padding: 1rem;
+        margin: 1rem 0;
+        text-align: center;
+    }
+
+    .no-errors p {
+        margin: 0;
+        color: #2e7d32;
+        font-weight: 500;
     }
 
     @media (max-width: 768px) {

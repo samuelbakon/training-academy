@@ -1,6 +1,6 @@
 import { Product } from "~/core/dataTypes/Product"
 
-interface CartItem {
+export interface CartItem {
     product: Product
     quantity: number
 }
@@ -11,20 +11,21 @@ const enum BusinessErrorCode{
     INVALID_QUANTITY = 'INVALID_QUANTITY'
 }
 
-interface BusinessErrors {
+export interface BusinessErrors {
     code: BusinessErrorCode
     message: string
     field?: string
     // champ concerné
     metadata?: Record<string, any>
     suggestedAction?: string
+    action: () => void
 }
 
 const useCart = () => {
     const items = ref<CartItem[]>([])
     const errors = ref<BusinessErrors[]>([])
 
-    const validateCart = () => {
+    const validateCart = () : boolean => {
         errors.value = []
         
         items.value.forEach((item, index) => {
@@ -34,37 +35,51 @@ const useCart = () => {
                     message: `Product at position ${index + 1} is invalid or missing`,
                     field: `items[${index}].product`,
                     metadata: { itemIndex: index },
-                    suggestedAction: 'Remove the invalid item from cart'
+                    suggestedAction: 'Remove the invalid item from cart',
+                    action: () => {
+                        items.value.splice(index, 1)
+                    }
                 })
             }
 
-            if (item.quantity <= 0) {
+            if (item.quantity <= 3) {
                 errors.value.push({
                     code: BusinessErrorCode.INVALID_QUANTITY,
-                    message: `Quantity for "${item.product.title}" must be greater than 0`,
+                    message: `Quantity for "${item.product.title}" must be greater than 3`,
                     field: `items[${index}].quantity`,
                     metadata: { productId: item.product.id, currentQuantity: item.quantity },
-                    suggestedAction: 'Set quantity to at least 1 or remove the item'
+                    suggestedAction: 'Set quantity to 3',
+                    action: () => {
+                        item.quantity = 3
+                        validateCart()
+                    }
                 })
             }
 
-            if (item.quantity > 100) {
+            if (item.quantity > 10) {
                 errors.value.push({
                     code: BusinessErrorCode.INVALID_QUANTITY,
-                    message: `Quantity for "${item.product.title}" exceeds maximum allowed (100)`,
+                    message: `Quantity for "${item.product.title}" exceeds maximum allowed (10)`,
                     field: `items[${index}].quantity`,
-                    metadata: { productId: item.product.id, currentQuantity: item.quantity, maxAllowed: 100 },
-                    suggestedAction: 'Reduce quantity to 100 or less'
+                    metadata: { productId: item.product.id, currentQuantity: item.quantity, maxAllowed: 10 },
+                    suggestedAction: 'Reduce quantity to 10',
+                    action: () => {
+                        item.quantity = 10
+                        validateCart()
+                    }
                 })
             }
 
-            if (item.product.price <= 0) {
+            if (item.product.price <= 20) {
                 errors.value.push({
                     code: BusinessErrorCode.INVALID_QUANTITY,
                     message: `Price for "${item.product.title}" is invalid`,
                     field: `items[${index}].product.price`,
                     metadata: { productId: item.product.id, currentPrice: item.product.price },
-                    suggestedAction: 'Contact support about this product pricing'
+                    suggestedAction: 'Contact support about this product pricing',
+                    action: () => {
+                        items.value.splice(index, 1)
+                    }
                 })
             }
         })

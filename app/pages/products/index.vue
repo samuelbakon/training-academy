@@ -12,7 +12,8 @@ const products = useState('products');
 
 const total = computed(() => products.value?.length || 0);
 
-onMounted(() => {
 
-});
+definePageMeta({
+  middleware: ['parity-minutes-access']
+})
 </script>
