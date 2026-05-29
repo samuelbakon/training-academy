@@ -38,6 +38,7 @@
   import FMMapContext from '~/components/findme/FMMapContext.vue'
   import FMProcessStep from '~/components/findme/FMProcessStep.vue'
 
+  
   /*
    * Page FindMe - Page principale de l'application
    * 
