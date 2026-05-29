@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FindMe - Système d'Adressage Précis</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .bg-grid-subtle {
+            background-image: radial-gradient(circle, #e2e2e4 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-low": "#f3f3f5",
+                    "surface-tint": "#4c56af",
+                    "surface-container": "#eeeef0",
+                    "primary": "#000666",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#e2e2e4",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed": "#e0e0ff",
+                    "surface-container-high": "#e8e8ea",
+                    "inverse-on-surface": "#f0f0f2",
+                    "secondary-fixed-dim": "#78dc77",
+                    "outline": "#767683",
+                    "on-tertiary-container": "#b29089",
+                    "on-surface-variant": "#454652",
+                    "tertiary-fixed-dim": "#e3beb6",
+                    "primary-fixed-dim": "#bdc2ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#1a1c1d",
+                    "background": "#f9f9fb",
+                    "on-tertiary-fixed-variant": "#5b403b",
+                    "on-surface": "#1a1c1d",
+                    "on-secondary-container": "#00731e",
+                    "surface-dim": "#d9dadc",
+                    "tertiary-fixed": "#ffdad3",
+                    "on-error": "#ffffff",
+                    "secondary-fixed": "#94f990",
+                    "on-primary-fixed-variant": "#343d96",
+                    "inverse-primary": "#bdc2ff",
+                    "inverse-surface": "#2f3132",
+                    "on-tertiary-fixed": "#2b1612",
+                    "tertiary-container": "#422a25",
+                    "secondary-container": "#91f78e",
+                    "outline-variant": "#c6c5d4",
+                    "tertiary": "#2a1611",
+                    "surface-variant": "#e2e2e4",
+                    "on-secondary-fixed": "#002204",
+                    "on-primary-fixed": "#000767",
+                    "error-container": "#ffdad6",
+                    "surface": "#f9f9fb",
+                    "on-primary-container": "#8690ee",
+                    "on-secondary-fixed-variant": "#005313",
+                    "on-secondary": "#ffffff",
+                    "primary-container": "#1a237e",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#f9f9fb",
+                    "secondary": "#006e1c",
+                    "error": "#ba1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "stack-md": "16px",
+                    "stack-sm": "8px",
+                    "stack-lg": "32px",
+                    "margin-desktop": "64px",
+                    "gutter": "24px",
+                    "base-unit": "8px"
+            },
+            "fontFamily": {
+                    "headline-md-mobile": ["Public Sans"],
+                    "body-lg": ["Public Sans"],
+                    "headline-md": ["Public Sans"],
+                    "headline-sm": ["Public Sans"],
+                    "label-sm": ["Public Sans"],
+                    "display-lg": ["Public Sans"],
+                    "body-md": ["Public Sans"]
+            },
+            "fontSize": {
+                    "headline-md-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<header class="bg-surface border-b border-outline-variant fixed top-0 w-full z-50">
+<nav class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-20 max-w-[1440px] mx-auto">
+<div class="text-headline-sm font-headline-sm font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-4xl" data-weight="fill">map</span>
+                FindMe
+            </div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-label-sm text-label-sm text-primary border-b-2 border-primary pb-1" href="#">Address Map</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">My Locations</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Precision Guide</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Institutional</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden md:block bg-primary text-on-primary px-6 py-2 rounded-lg font-label-sm text-label-sm hover:opacity-90 transition-transform active:scale-95">
+                    Create Address
+                </button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+<button class="md:hidden p-2 text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+</header>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative overflow-hidden bg-grid-subtle py-stack-lg md:py-24 px-margin-mobile md:px-margin-desktop">
+<div class="max-w-[1440px] mx-auto grid md:grid-cols-2 gap-12 items-center">
+<div class="space-y-stack-md order-2 md:order-1">
+<h1 class="font-display-lg text-display-lg text-primary leading-tight">
+                        Créez votre adresse précise <span class="text-secondary">en un clic</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+                        FindMe comble le fossé entre la précision institutionnelle et la navigation humaine pour transformer chaque coin de rue en une destination identifiée.
+                    </p>
+<div class="flex flex-wrap gap-4 pt-stack-sm">
+<a class="bg-primary text-on-primary px-8 py-4 rounded-xl font-headline-sm flex items-center gap-3 shadow-md hover:translate-y-[-2px] transition-all" href="#formulaire">
+                            Démarrer l'inscription
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+<div class="flex items-center gap-2 px-4 py-2 bg-secondary-container text-on-secondary-container rounded-lg font-label-sm">
+<span class="material-symbols-outlined text-sm">verified</span>
+                            Service Certifié
+                        </div>
+</div>
+</div>
+<div class="order-1 md:order-2 flex justify-center">
+<div class="relative group">
+<div class="absolute -inset-4 bg-primary-fixed opacity-20 blur-3xl rounded-full"></div>
+<img alt="FindMe Whimsical Illustration" class="relative z-10 w-full max-w-md drop-shadow-2xl group-hover:rotate-1 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvWBnrRt6DWZUFbN5yxbREectpcL2ZV3ulH7KcslX7YoWc2zTk-Sq_H1yGwe4HQb_Sy6ylML1ffXgdgTdM5joNkNp2juclgvByWFB_gxrKDu51FmDr_Duq9FQBYBxCXg7T1gM23kCkIQOPxgYXJi1xIDP8PK1QensRr3VJNGQfM5DJqRY4AjfUZPOYI0VJIfCy1fyrzmAM96VJ1EBOyUjvfXklUdHuaQAIc4YRXRldstbfom7n3tGEkwbxvMk9N2qpjQE5jR0P_1jp"/>
+</div>
+</div>
+</div>
+</section>
+<!-- How it works (Process) -->
+<section class="py-stack-lg bg-surface-container-lowest px-margin-mobile md:px-margin-desktop">
+<div class="max-w-[1440px] mx-auto">
+<div class="text-center mb-16">
+<span class="text-primary font-label-sm uppercase tracking-widest">Le Processus</span>
+<h2 class="font-headline-md text-headline-md mt-2">Navigation et Précision Institutionnelle</h2>
+</div>
+<div class="grid md:grid-cols-3 gap-gutter">
+<!-- Step 1 -->
+<div class="p-stack-md bg-white border border-outline-variant rounded-xl group hover:border-primary transition-colors">
+<div class="w-16 h-16 bg-surface-container-low rounded-lg flex items-center justify-center mb-6 text-primary group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-3xl">my_location</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-2">Géolocalisation</h3>
+<p class="text-on-surface-variant">Activez votre GPS pour capturer vos coordonnées exactes avec une précision au mètre près.</p>
+</div>
+<!-- Step 2 -->
+<div class="p-stack-md bg-white border border-outline-variant rounded-xl group hover:border-primary transition-colors">
+<div class="w-16 h-16 bg-surface-container-low rounded-lg flex items-center justify-center mb-6 text-primary group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-3xl">edit_note</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-2">Identification</h3>
+<h3 class="sr-only">Détails de l'adresse</h3>
+<p class="text-on-surface-variant">Remplissez les détails familiers : quartier, rue, et numéro de domicile pour un adressage complet.</p>
+</div>
+<!-- Step 3 -->
+<div class="p-stack-md bg-white border border-outline-variant rounded-xl group hover:border-primary transition-colors">
+<div class="w-16 h-16 bg-surface-container-low rounded-lg flex items-center justify-center mb-6 text-primary group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-3xl">check_circle</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-2">Validation</h3>
+<p class="text-on-surface-variant">Votre adresse est enregistrée dans le système national et prête à être partagée instantanément.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Address Form Section -->
+<section class="py-24 bg-surface px-margin-mobile md:px-margin-desktop" id="formulaire">
+<div class="max-w-[900px] mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-outline-variant">
+<div class="grid md:grid-cols-[1fr_2fr]">
+<div class="bg-primary p-12 text-on-primary flex flex-col justify-between relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="font-headline-md text-headline-md mb-6">Formulaire d'Adressage</h3>
+<p class="text-on-primary-container opacity-90 leading-relaxed">
+                                Contribuez à la modernisation urbaine en identifiant formellement votre emplacement. 
+                            </p>
+</div>
+<div class="mt-12 space-y-6 relative z-10">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary-fixed">verified_user</span>
+<span class="text-label-sm font-label-sm">Données Sécurisées</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary-fixed">public</span>
+<span class="text-label-sm font-label-sm">Standards Internationaux</span>
+</div>
+</div>
+<!-- Background decoration -->
+<div class="absolute -bottom-10 -right-10 w-48 h-48 bg-white opacity-5 rounded-full"></div>
+</div>
+<div class="p-12">
+<form class="space-y-6">
+<div class="grid md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant">Pays</label>
+<select class="w-full bg-surface-container-low border-outline-variant rounded-lg p-3 text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-all appearance-none">
+<option>Cameroun</option>
+<option>Côte d'Ivoire</option>
+<option>Sénégal</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant">Ville</label>
+<input class="w-full bg-surface-container-low border-outline-variant rounded-lg p-3 text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Ex: Douala" type="text"/>
+</div>
+</div>
+<div class="grid md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant">Quartier</label>
+<input class="w-full bg-surface-container-low border-outline-variant rounded-lg p-3 text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Ex: Akwa" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant">Rue</label>
+<input class="w-full bg-surface-container-low border-outline-variant rounded-lg p-3 text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Nom de la rue" type="text"/>
+</div>
+</div>
+<div class="grid md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant">Numéro de domicile</label>
+<input class="w-full bg-surface-container-low border-outline-variant rounded-lg p-3 text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Ex: 42B" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant">Code postal (optionnel)</label>
+<input class="w-full bg-surface-container-low border-outline-variant rounded-lg p-3 text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="0000" type="text"/>
+</div>
+</div>
+<div class="bg-surface-container-high rounded-xl p-6 space-y-4">
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-label-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">location_on</span>
+                                        GPS Position
+                                    </span>
+<button class="bg-white border border-primary text-primary px-4 py-2 rounded-lg font-label-sm hover:bg-primary hover:text-white transition-all flex items-center gap-2 active:scale-95" type="button">
+<span class="material-symbols-outlined text-sm">my_location</span>
+                                        Détecter ma position
+                                    </button>
+</div>
+<div class="flex items-center gap-3 text-secondary font-label-sm bg-secondary-container/30 p-3 rounded-lg border border-secondary/20">
+<span class="material-symbols-outlined">check_circle</span>
+                                    Position détectée : 4.0511° N, 9.7679° E
+                                </div>
+</div>
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant">Photo du bâtiment</label>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center gap-3 hover:border-primary cursor-pointer group transition-all">
+<span class="material-symbols-outlined text-4xl text-outline group-hover:text-primary">add_a_photo</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Cliquez pour téléverser ou glissez un fichier</p>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-xl font-headline-sm hover:shadow-lg transition-all active:scale-[0.98] mt-8">
+                                Enregistrer mon adresse
+                            </button>
+</form>
+</div>
+</div>
+</div>
+</section>
+<!-- Visual Map Context -->
+<section class="h-[500px] relative">
+<div class="absolute inset-0 bg-surface-container">
+<img alt="Urban mapping visualization" class="w-full h-full object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-1000" data-alt="A high-angle architectural map view of a modern African city with clean street grids and precisely plotted address points. The visualization uses a sophisticated color palette of deep navy blues and success greens to highlight navigable routes. Soft morning light casts gentle shadows, creating a clean, institutional yet optimistic atmosphere. The image emphasizes civic organization and technological advancement in urban planning." data-location="Douala" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBR0ieq_wRvxefRzZO3hX4i2U-IsGLP0xZPhC9TXsM2ZWbqHZCvIofgQ6k_7HvRbo1tuaSVcHTFHZXEVNuxka4m-1deolcwbGUQ6YftBX5JcbihkSGHUwAv3wUzMSLmnyjId8X-VGNwSk1b40Z6Sc-0ysNA_mzMYjjoIibsNUhq-0E2RYFjLPLWX-62RCcfmVV6FFUkePxTOmMgSrRi0TKiTAge-xM005KSHVDuUf0M6oGoOJcXXX4SfjH_rXT1M7wU1yKLmafNT5Ye"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
+<div class="bg-white/90 backdrop-blur px-8 py-6 rounded-2xl shadow-2xl border border-primary/10">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white mx-auto mb-4 animate-bounce">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Précision Institutionnelle</h3>
+<p class="text-on-surface-variant">Données validées par FindMe Systems</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container border-t border-outline-variant">
+<div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop py-stack-md flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col items-center md:items-start gap-2">
+<div class="font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">map</span>
+                    FindMe Brand Systems
+                </div>
+<p class="font-body-md text-body-md text-on-surface-variant text-center md:text-left">
+                    © 2024 FindMe Brand Systems. All rights reserved. Institutional Document Ref: FM-2024-CG.
+                </p>
+</div>
+<div class="flex gap-8 items-center">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors underline" href="#">Legal Mentions</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors underline" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors underline" href="#">Contact Support</a>
+</div>
+</div>
+</footer>
+<!-- Micro-interaction JS -->
+<script>
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.96)';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'scale(1)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+
+        // Simple observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section > div').forEach(div => {
+            div.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+            observer.observe(div);
+        });
+    </script>
+</body></html>
